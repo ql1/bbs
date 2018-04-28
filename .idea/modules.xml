@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../bbs base/.idea/untitled1.iml" filepath="$PROJECT_DIR$/../bbs base/.idea/untitled1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bbs_club.iml" filepath="$PROJECT_DIR$/.idea/bbs_club.iml" />
+      <module fileurl="file://D:\py\bbs\bbs base\.idea\untitled1.iml" filepath="D:\py\bbs\bbs base\.idea\untitled1.iml" />
     </modules>
   </component>
 </project>
