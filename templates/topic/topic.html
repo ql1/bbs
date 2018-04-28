@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bbs club</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/lib/editor/editor.css">
+    <link rel="stylesheet" href="/static/lib/webuploader/webuploader.css">
+    <script src="/static/lib/jquery-3.0.0.min.js"></script>
+    <script src="/static/lib/markdownit.js"></script>
+    <script src="/static/lib/webuploader/webuploader.withoutimage.js"></script>
+    <script src="/static/lib/editor/editor.js"></script>
+    <script src="/static/lib/editor/ext.js"></script>
+     <style>
+       ul{
+            margin: 0 px;
+            padding: 0 px;
+            float:left;
+            display:block;
+            width: 80%;
+            height: 20px;
+
+        }
+        .navbar{
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-inverse" role="navigation">
+  <div class="navbar-header">
+    <a href="##" class="navbar-brand">QL BBS</a>
+  </div>
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="{{ url_for('index.index')}}">首页</a></li>
+    <li><a href="">关于</a></li>
+    <li><a href="{{ url_for('index.register_p') }}">注册</a></li>
+    <li><a href="{{ url_for('index.login_p') }}">登录</a></li>
+  </ul>
+       <div id="sidebar">
+        <!--<div class="panel">-->
+            <!--<div class="inner">-->
+                <!--<a href="/topic/new" class="create_topic_btn">-->
+                    <!--<span class="span-success">发布话题</span>-->
+                <!--</a>-->
+                <a class="btn btn-default" href={{url_for('index.profile')}} role="button">完善资料</a>
+                <a class="btn btn-default" href={{url_for('index.logout')}} role="button">退出登录</a>
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<div id="main">
+    <div id="content">
+        <div class="panel">
+            <div class="inner post">
+                <form id="create_topic_form" method="post" action="{{ url_for('.add') }}">
+                    <fieldset>
+                        <p id="testtitle"></p>
+                        <span id="wordLengthtitle" style="font-family:Georgia;">0/10</span>
+                        标题：<textarea autofocus class='span9' id='title' onkeyup="inputTest(this.id,this.value)" name='title' rows='1' placeholder="标题字数 10 字以上"></textarea>
+                        <div class='markdown_editor in_editor'>
+                          <div class='markdown_in_editor'>
+                              <p id="testcontent"></p>
+                              <span id="wordLengthcontent" style="font-family:Georgia;">0/50</span>
+                            内容：<textarea class='editor'  id='content' onkeyup="inputTest(this.id,this.value)" name='content' rows='20' placeholder='文章支持 Markdown 语法, 请注意标记代码'></textarea>
+                            <div class='editor_buttons'>
+                              <input id='po' type="submit" disabled="disabled" class='span-primary submit_btn' data-loading-text="提交中" value="提交">
+                            </div>
+                          </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+function getStrLength(str){
+    //传递一个字符串过来
+    var mylen=0;
+    //遍历这个字符串
+    for(var i=0;i<str.length;i++){
+        //如果字符串的第i个字符的Unicode码在0-128之间就是英文字符，应该算一个长度
+        if(str.charCodeAt(i)>0&&str.charCodeAt(i)<128){
+            mylen++;
+        }else{
+            //否则算两个长度
+            mylen+=2;
+        }
+    }
+    return mylen;
+}
+//输入当字符数变更就触发这个函数
+function inputTest(id,value){
+    //先调getStrLength用统计当前文本框中所含文本的值，因为getStrLength统计出来的东西是英文字符长度，所以要除以2，强行转换为整形
+    //再补上/10替换wordLength中的文本，/应该被转义，否则在某些编译器中无法通过，例如Dreamwaver
+    var l = parseInt(getStrLength(value))
+    if(id=="title"){
+        document.getElementById("wordLength"+id).innerHTML=parseInt(getStrLength(value)/2)+"\/10";
+    }
+    else{
+        document.getElementById("wordLength"+id).innerHTML=parseInt(getStrLength(value)/2)+"\/50";
+    }
+    if(id=="title"){
+        //如果超过10个字，20个字符
+
+        if(l<6 || l>20){
+            //那么把警告内容显示出来，并把其中的颜色设置为红色，当然，你在HTML那里设置也可以
+            document.getElementById("test"+id).style.display="block";
+            document.getElementById("test"+id).innerHTML="太短，请修改至3字之上 10字以下";
+            document.getElementById("test"+id).style.color="#ff6869";
+        }
+        else{
+            //否则隐藏警告内容
+            document.getElementById("test"+id).innerHTML="";
+            document.getElementById("test"+id).style.display="none";
+        }
+    }
+    else{
+        //如果超过10个字，20个字符
+        if(l<20){
+            //那么把警告内容显示出来，并把其中的颜色设置为红色，当然，你在HTML那里设置也可以
+            document.getElementById("test"+id).style.display="block";
+            document.getElementById("test"+id).innerHTML="太短，请修改至10字之上";
+            document.getElementById("test"+id).style.color="#ff0000";
+            document.getElementById('po').disabled = true;
+        }
+        else{
+            //否则隐藏警告内容
+            document.getElementById("test"+id).innerHTML="";
+            document.getElementById("test"+id).style.display="none";
+            document.getElementById('po').disabled = false;
+            // if(l<20){
+            //     document.getElementById('po').disabled = true;
+            // }
+        }
+    }
+}
+  (function () {
+    var editor = new Editor();
+    editor.render($('.editor')[0]);
+  })();
+</script>
+</body>
+</html>

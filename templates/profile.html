@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/lib/editor/editor.css">
+    <link rel="stylesheet" href="/static/lib/webuploader/webuploader.css">
+    <script src="/static/lib/jquery-3.0.0.min.js"></script>
+    <script src="/static/lib/markdownit.js"></script>
+    <script src="/static/lib/webuploader/webuploader.withoutimage.js"></script>
+    <script src="/static/lib/editor/editor.js"></script>
+    <script src="/static/lib/editor/ext.js"></script>
+    <link href="/static/css/css1.css" rel="stylesheet" style="text/css">
+    <style>
+        ul{
+            margin: 0 px;
+            padding: 0 px;
+            float:left;
+            display:block;
+            width: 80%;
+            height: 20px;
+
+        }
+        #search_form{
+            width: 300px;
+            height: 100px;
+        }
+        img{
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .lol{
+            margin-left: 30px;
+        }
+        .navbar{
+            height: 70px;
+        }
+        li{
+            display: inline;
+            /*width: 20%;*/
+        }
+        #jue{
+            display: inline;
+        }
+        .class-main{
+            margin:20px;
+            margin-left: 30px;
+            padding-left: 30px;
+            padding-top: 10px;
+            background-color: white;
+            height: 100%;
+            width: 90%;
+            /*background-image: url("/static/OnePiece.jpg");*/
+        }
+        /*body{background: url()}*/
+    </style>
+</head>
+<body style="background-color: white">
+    <div class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <a href="##" class="navbar-brand">QL BBS</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{{ url_for('index.index')}}">首页</a></li>
+        <li><a href="">关于</a></li>
+        <li><a href="{{ url_for('index.register_p') }}">注册</a></li>
+        <li><a href="{{ url_for('index.login_p') }}">登录</a></li>
+      </ul>
+           <div id="sidebar">
+            <!--<div class="panel">-->
+                <!--<div class="inner">-->
+                    <!--<a href="/topic/new" class="create_topic_btn">-->
+                        <!--<span class="span-success">发布话题</span>-->
+                    <!--</a>-->
+                    <a class="btn btn-default" href={{url_for('index.profile')}} role="button">完善资料</a>
+                    <a class="btn btn-default" href={{url_for('index.logout')}} role="button">退出登录</a>
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <!--<div class="class-main">-->
+    <!--<h1>用户资料页面</h1>-->
+    <!--<div>-->
+        <!--{{ user.id }}-->
+    <!--</div>-->
+
+
+
+    <div class="container">
+        <div class="contains">
+            <div id="id-username" style="margin: 25px 30px">
+        <h3 ALIGN="center">{{ user.username }}</h3>
+    </div>
+    <!--<div>-->
+        <!--{{ user.password }}-->
+    <!--</div>-->
+    <title>Upload new profile</title>
+
+        <!--<h4>上传头像</h4>-->
+        <form class="lol" action={{url_for(".add_img")}} method="post" enctype="multipart/form-data">
+        <br>
+            <input class="btn btn-default" type="file" name="file" value="浏览">
+            <br>
+            <input class="btn btn-primary" type="submit" name="" value=上传头像>
+        <!--</p>-->
+        </form>
+        </div>
+        <div class="rigth_lan">
+            <div align="center"  >当前头像</div>
+            <div id="head-pic">
+                <img style="border-radius:20px " src={{ '/uploads/' + user.user_image}}
+            </div>
+
+        </div>
+    </div>
+
+<!--</div>-->
+</body>
+</html>

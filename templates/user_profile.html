@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详细资料</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+</head>
+<body>
+    <h2>
+        用户名：{{u.username}}
+    </h2>
+    <img src={{ '/uploads/' + u.user_image}}
+    width=350px
+    height=200px
+    title="{{ u.username }}"/>
+</body>
+</html>

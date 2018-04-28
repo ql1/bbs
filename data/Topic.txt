@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "views": 8,
+    "title": "re",
+    "content": "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "ct": 1524101921,
+    "user_id": 1,
+    "board_id": 2
+  },
+  {
+    "id": 2,
+    "views": 23,
+    "title": "试一试 我的默认头像",
+    "content": "哈哈 ，我非要把他放在精华里面",
+    "ct": 1524105260,
+    "user_id": 2,
+    "board_id": 1
+  },
+  {
+    "id": 3,
+    "views": 3,
+    "title": "头像是否更改",
+    "content": "是是是",
+    "ct": 1524279710,
+    "user_id": 1,
+    "board_id": 2
+  },
+  {
+    "id": 4,
+    "views": 0,
+    "title": "",
+    "content": "**trrrrrrrr**",
+    "ct": 1524302622,
+    "user_id": 1,
+    "board_id": 1
+  }
+]
