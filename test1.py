@@ -30,3 +30,5 @@ import os
 # xiangdui = os.path.dirname(__name__)
 # os.chdir('//<username>/Desktop/')
 # print(os.getcwd())
+l = []
+print('haha')
