@@ -88,7 +88,7 @@ class User(Mongua):
             # n_user.from_form(form)
             n_user.username = username
             n_user.password = n_user.salted_password(password)
-            n_user.user_image = 'temg.jpg'
+            n_user.user_image = 'temp.jpg'
             n_user.save()
             return n_user
         else:
