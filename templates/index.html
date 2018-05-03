@@ -73,23 +73,27 @@
         </div>
     </div>
 
-    <form id="sign_form" class="form-horizontal" method="post" action="{{ url_for('.register') }}">
+{#    "{{ url_for('.register') }}"#}
+    <form id="sign_form" class="form-horizontal" method="post" action="">
         <div class="control-group">
             <label class="control-label">用户名</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="username">
+                <input id="id-username" type="text" class="input-xlarge" name="username">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">密码</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="password">
+                <input type="password" id="id-passwd" class="input-xlarge" name="password">
             </div>
         </div>
         <div class="form-actions">
-            <input type="submit" class="span-primary" value="注册">
+            <input id="id-button-subm" type="button" class="span-primary" value="注册">
         </div>
     </form>
+    <div>
+        {{ message }}
+    </div>
     <form class="form-horizontal" method="post" action="{{ url_for('.login') }}">
         <div class="control-group">
             <label class="control-label">用户名</label>
@@ -100,12 +104,93 @@
         <div class="control-group">
             <label class="control-label">密码</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="password">
+                <input id="id-password" type="text" class="input-xlarge" name="password">
             </div>
         </div>
         <div class="form-actions">
             <input type="submit" class="span-primary" value="登录">
         </div>
     </form>
+
+
+<script>
+    var log = function(){
+	console.log.apply(console,arguments)
+}
+    var ajax = function(method, path, data, responseCallback) {
+    var r = new XMLHttpRequest()
+    // 设置请求方法和请求地址
+    r.open(method, path, true)
+    // 设置发送的数据的格式为 application/json
+    // 这个不是必须的
+    r.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    // 注册响应函数
+    r.onreadystatechange = function() {
+        if(r.readyState === 4) {
+            // r.response 存的就是服务器发过来的放在 HTTP BODY 中的数据
+            responseCallback(r.response)
+        }
+    }
+    // 把数据转换为 json 格式字符串
+    data = JSON.stringify(data)
+    // 发送请求
+    log('finally-data',data,typeof data)
+    r.send(data)
+}
+
+    var e = function (element) {
+        s = document.querySelector(element)
+        return s
+    }
+{#    var u_username = e('#id-username')#}
+{#    var u_password = e('#id-passwd')#}
+
+
+    var check = function (form) {
+        log(456,form.password)
+        if (form.password.length < 6){
+        alert('密码不能小于6位')
+    }
+        else {
+            log('finally-form',form)
+            ajax('POST','/register',form,function (r) {
+                var r = JSON.parse(r)
+                log('rrrrr',r)
+                if(r === -1){
+                    alert('用户名已被占用，请重新注册')
+                }
+                else if(r === 1){
+                    alert('注册成功,请登录')
+                    input_username = e('#id-username')
+                    input_password = e('#id-passwd')
+                    input_username.value = ''
+                    input_password.value = ''
+                }
+                else{
+                    alert('未知错误，用户名长度必须大于2')
+                }
+        })
+    }
+    }
+
+    var subm = e('#id-button-subm')
+    subm.addEventListener('click',function (r) {
+
+        var u_username = document.getElementById('id-username')
+        var u_password = document.getElementById('id-passwd')
+    {#    username = u_username.value#}
+    {#    password = u_password.value#}
+        log('ps',u_username.value)
+        var form = {
+            username:u_username.value ,
+            password:u_password.value ,
+
+        }
+        log('form',form)
+        check(form)
+    })
+
+
+</script>
 </body>
 </html>

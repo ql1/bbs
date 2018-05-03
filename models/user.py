@@ -80,6 +80,7 @@ class User(Mongua):
     def register(cls,form):
         username = form.get('username','')
         password = form.get('password','')
+        log('user_model',username,password,type(password))
         if User.find_by(username = username) is not None:
             return False
         elif len(username) > 2 and len(password) >5:
@@ -87,6 +88,7 @@ class User(Mongua):
             n_user = User.new(form)
             # n_user.from_form(form)
             n_user.username = username
+            # log('n_username',u_user.username)
             n_user.password = n_user.salted_password(password)
             n_user.user_image = 'temp.jpg'
             n_user.save()
@@ -106,9 +108,10 @@ class User(Mongua):
         u = User()
         u.from_form(form)
         user = User.find_by(username = u.username)
-        log('**debug',user)
+        # log('**debug',user)
         # print(user.__dict__)
         if user is not None and user.password == u.salted_password(u.password):
+            log('***这一步',user.password)
             return user
         else:
             return None

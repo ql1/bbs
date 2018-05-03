@@ -5,6 +5,7 @@ from flask import request
 from flask import session
 from flask import url_for
 from flask import send_from_directory
+import json
 
 from config import user_file_d
 
@@ -58,13 +59,35 @@ def login_p():
 @main.route('/register', methods=['POST'])
 def register():
     form = request.form
+
+    form = form.to_dict()
+    for k,v in form.items():
+        temp = k
+    form = json.loads(temp)
+    log('form',form,type(form))
+    # for i in form:
+    #     log(i)
+    # log('register-form',form,type(form))
+    # # form = dict(form)
+    # log('finally-form',form,type(form))
     u = User.register(form)
-    return redirect(url_for('.index'))
+    message = 0
+    #message 即返回给ajax 的状态，-1为重名，1为正常，0为其他 用户名长度问题
+    if u == False:
+        message = -1
+    elif u.__class__.__name__ == 'User':
+        message = 1
+    else:
+        message = 0
+    log('message',message)
+    message = json.dumps(message)
+    return message
 
 
 @main.route('/login', methods=['POST'])
 def login():
     form = request.form
+    log('login',form)
     u = User.validate_login(form)
     if u is None:
         return redirect(url_for('.index'))
