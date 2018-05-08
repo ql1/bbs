@@ -91,9 +91,9 @@
             <input id="id-button-subm" type="button" class="span-primary" value="注册">
         </div>
     </form>
-    <div>
-        {{ message }}
-    </div>
+{#    <div>#}
+{#        {{ message }}#}
+{#    </div>#}
     <form class="form-horizontal" method="post" action="{{ url_for('.login') }}">
         <div class="control-group">
             <label class="control-label">用户名</label>
@@ -104,7 +104,7 @@
         <div class="control-group">
             <label class="control-label">密码</label>
             <div class="controls">
-                <input id="id-password" type="text" class="input-xlarge" name="password">
+                <input id="id-password" type="password" class="input-xlarge" name="password">
             </div>
         </div>
         <div class="form-actions">
